@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:VisualElement name="TransitionTable" style="flex-grow: 1; height: 175px;">
+        <ui:Label tabindex="-1" text="Transition Table" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+        <ui:DropdownField label="Dropdown" index="-1" choices="System.Collections.Generic.List`1[System.String]" binding-path="transitionTable.allFunctionClipTypes" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -15,30 +15,29 @@ public class ConeSlash : Action
     public IEnumerator ConeSlashSequence()
     {
         duration = 1f;
-        bool hurtboxUsed = false;
-        Rigidbody2D hurtboxRB = Instantiate(character.coneSlashHurtBox, character.transform.position, Quaternion.identity).GetComponent<Rigidbody2D>();
-        for (float time = 0f; time < duration; time += Time.deltaTime)
+        bool hitboxUsed = false;
+        GameObject hitboxInstance = Instantiate(character.coneSlashHurtBox, character.transform.position, Quaternion.AngleAxis(Vector3.Angle(Vector3.right, character.targetDirection), Vector3.back));
+        Rigidbody2D hitboxRB = hitboxInstance.GetComponent<Rigidbody2D>();
+        for (float time = 0f; time <= duration; time += Time.deltaTime)
         {
-            if (time > hitMoment && !hurtboxUsed)
+            if (time > hitMoment && !hitboxUsed)
             {
-                hurtboxUsed = true;
+                hitboxUsed = true;
+                
                 Collider2D[] hitColliders = new Collider2D[10];
-                if (0 < hurtboxRB.OverlapCollider(character.hurtboxFilter, hitColliders))
+                if (0 < hitboxRB.OverlapCollider(character.hurtboxFilter, hitColliders))
                 {
                     foreach (Collider2D collider in hitColliders)
                     {
-                        
                         if (collider == null) break;
-                        Debug.Log("ahh");
-                        Character other = collider.gameObject.GetComponent<Character>();
-                        if (other != null && other != character)
+                        CharacterHurtbox other = collider.gameObject.GetComponent<CharacterHurtbox>();
+                        if (other != null && other != character.hurtbox)
                         {
-                            other.ChangeFunctionClip<Die>("action");
-                            if (character.debug) Debug.Log("Setting a character to Stagger!!");
+                            other.Hit(1, character);
                         }
                     }
                 }
-                Destroy(hurtboxRB.gameObject);
+                Destroy(hitboxRB.gameObject);
                 
             }
             yield return null;

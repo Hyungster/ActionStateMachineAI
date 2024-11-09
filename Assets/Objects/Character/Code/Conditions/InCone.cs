@@ -16,6 +16,7 @@ public class InCone : Condition
             foreach (Character other in character.charactersScanned)
             {
                 Vector2 diff = other.transform.position - character.transform.position;
+                diff.Normalize();
                 float angle = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
                 angles.Add(angle);
             }
@@ -40,15 +41,13 @@ public class InCone : Condition
             {
                 if (numInCone[i][0] > maxNum)
                 {
-                    maxNum = (int) numInCone[i][0];
+                    maxNum = (int)numInCone[i][0];
                     maxIndex = i;
                 }
             }
             float targetAngle = numInCone[maxIndex][1];
             if (maxNum >= minCharacters)
-            {
-                float offset = coneAngle / (maxNum * 2);
-                targetAngle += Random.Range(-offset, offset);
+            { 
                 character.targetDirection = new Vector2(Mathf.Cos(targetAngle * Mathf.Deg2Rad), Mathf.Sin(targetAngle * Mathf.Deg2Rad));
                 return true;
             }

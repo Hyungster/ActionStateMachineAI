@@ -9,5 +9,6 @@ public class Die : Action
     {
         base.Start();
         character.alive = false;
+        Debug.Log("I die today");
     }
 }

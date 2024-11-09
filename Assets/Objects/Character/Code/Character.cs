@@ -7,19 +7,23 @@ using System;
 using static UnityEngine.GraphicsBuffer;
 using UnityEditor;
 using UnityEngine.TextCore.Text;
+using Unity.VisualScripting;
 public class Character : MonoBehaviour
 {
-    [HideInInspector] GameObject visualObject;
+    [HideInInspector] public GameObject visualObject;
 
     public bool alive = true;
+
+    private int health = 1;
     public bool debug = false;
 
     [HideInInspector] public Vector2 targetDirection = Vector2.up;
     public Vector2 targetLocation = Vector2.zero;
-    public Character targetCharacter = null;
+    [HideInInspector] public Character hitCharacter = null;
 
 
     public CircleCollider2D scanCollider;
+    [HideInInspector] public CharacterHurtbox hurtbox;
     public ContactFilter2D hurtboxFilter;
     [HideInInspector] public List<Character> charactersScanned;
 
@@ -27,10 +31,13 @@ public class Character : MonoBehaviour
     public GameObject coneSlashHurtBox;
 
     [HideInInspector] public int initialActionIndex = 0;
+    [HideInInspector] public GameObject body;
 
     void Start()
     {
         visualObject = transform.Find("Body/Visual").gameObject;
+        hurtbox = transform.Find("Body/Hurtbox").gameObject.GetComponent<CharacterHurtbox>();
+
 
         List<FunctionClip> functionClips = new List<FunctionClip>(); //temp list to hold functionclips
 
@@ -72,6 +79,12 @@ public class Character : MonoBehaviour
     
     void Update()
     {
+        //DebugData();
+        UpdateTracks();
+    }
+
+    private void DebugData()
+    {
         if (debug)
         {
             if (charactersScanned.Count > 0)
@@ -85,7 +98,6 @@ public class Character : MonoBehaviour
             }
             Debug.DrawLine((Vector2)transform.position, (Vector2)transform.position + targetDirection, Color.green, 0.5f);
         }
-        UpdateTracks();
     }
 
     private void FixedUpdate()
@@ -189,7 +201,7 @@ public class Character : MonoBehaviour
 
     public void OnHurtboxTriggerEntered(Collider2D collider)
     {
-
+        
     }
 
     public void OnNavTriggerEntered(Collider2D collider)
@@ -204,6 +216,22 @@ public class Character : MonoBehaviour
     public void OnScanTriggerExited(Collider2D collider)
     {
         charactersScanned.Remove(collider.gameObject.GetComponent<Character>());
+    }
+
+    public void TakeDamage(int damage, Character source)
+    {
+        if (!alive) return;
+        health -= damage;
+        hitCharacter = source;
+        if (health <= 0)
+        {
+            alive = false;
+            Debug.Log("I die today");
+            SpriteRenderer sr = visualObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
+            sr.color = Color.Lerp(sr.color, Color.red, 0.2f); 
+        }
+        ChangeFunctionClip(typeof(Stagger), "action");
+        Stagger clip = functionTracks[0].clip as Stagger;
     }
 }
 

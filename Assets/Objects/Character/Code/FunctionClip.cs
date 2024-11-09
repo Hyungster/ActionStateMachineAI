@@ -57,15 +57,13 @@ public abstract class FunctionClip : ScriptableObject
     {
         for (int i = 0; i < conditionCollections.Count; i++)
         {
-            if (character.actionTransitionTable.table[myRowIndex, i].GetType() == typeof(ActionReset)) continue;
             if (conditionCollections[i] == null)
             {
-                Type toClip = character.actionTransitionTable.table[myRowIndex, i];
-                HandleTransition(toClip);
-                return;
+                continue;
             }
             else if (CheckConditionCollection(conditionCollections[i]))
             {
+                Debug.Log(conditionCollections[i].name);
                 Type toClip = character.actionTransitionTable.table[myRowIndex, i];
                 HandleTransition(toClip);
                 return;
@@ -119,7 +117,6 @@ public abstract class Action : FunctionClip
 
     public override void End()
     {
-        base.End();
         CheckTransition();
     }
 }

@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 5072210463775170250}
+  rb: {fileID: 6745285793132877460}
 --- !u!50 &6745285793132877460
 Rigidbody2D:
   serializedVersion: 4
@@ -407,11 +408,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0936f3e94462eff418272dd62dfda5c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visualObject: {fileID: 0}
+  alive: 1
   debug: 0
   targetDirection: {x: 0, y: 1}
   targetLocation: {x: 0, y: 0}
   targetCharacter: {fileID: 0}
   scanCollider: {fileID: 8133998234040259387}
+  hurtbox: {fileID: 0}
   hurtboxFilter:
     useTriggers: 1
     useLayerMask: 1
@@ -429,6 +433,7 @@ MonoBehaviour:
   charactersScanned: []
   coneSlashHurtBox: {fileID: 5984568712629029356, guid: f665c28b071666f40bb4f7ae88f2a04c, type: 3}
   initialActionIndex: 0
+  body: {fileID: 0}
   actionTransitionTable:
     clipChoiceIndices: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     clipRows:

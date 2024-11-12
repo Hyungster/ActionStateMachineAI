@@ -8,6 +8,7 @@ using static UnityEngine.GraphicsBuffer;
 using UnityEditor;
 using UnityEngine.TextCore.Text;
 using Unity.VisualScripting;
+using UnityEngine.VFX;
 public class Character : MonoBehaviour
 {
     [HideInInspector] public GameObject visualObject;
@@ -16,6 +17,8 @@ public class Character : MonoBehaviour
 
     private int health = 1;
     public bool debug = false;
+
+    public float beatDuration = 0.375f;
 
     [HideInInspector] public Vector2 targetDirection = Vector2.up;
     public Vector2 targetLocation = Vector2.zero;
@@ -29,14 +32,20 @@ public class Character : MonoBehaviour
 
     //character hurtboxes
     public GameObject coneSlashHurtBox;
+    public VisualEffectAsset coneSlashHitEffect;
+
+    public VisualEffectAsset pierceHitEffect;
+    public VisualEffectAsset pounceHitEffect;
 
     [HideInInspector] public int initialActionIndex = 0;
     [HideInInspector] public GameObject body;
+    private TrailRenderer trailRenderer;
 
     void Start()
     {
         visualObject = transform.Find("Body/Visual").gameObject;
         hurtbox = transform.Find("Body/Hurtbox").gameObject.GetComponent<CharacterHurtbox>();
+        trailRenderer = transform.Find("Body/Visual/Trail").gameObject.GetComponent<TrailRenderer>();
 
 
         List<FunctionClip> functionClips = new List<FunctionClip>(); //temp list to hold functionclips
@@ -227,11 +236,17 @@ public class Character : MonoBehaviour
         {
             alive = false;
             Debug.Log("I die today");
+            hurtbox.gameObject.SetActive(false);
             SpriteRenderer sr = visualObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
             sr.color = Color.Lerp(sr.color, Color.red, 0.2f); 
         }
         ChangeFunctionClip(typeof(Stagger), "action");
         Stagger clip = functionTracks[0].clip as Stagger;
+    }
+
+    public void SetTrailEmitterActive(bool tf)
+    {
+        trailRenderer.emitting = tf;
     }
 }
 

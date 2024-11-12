@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Pounce : Action
 {
+
+    List<CharacterHurtbox> alreadyHit = new();
     public override void Start()
     {
         base.Start();
@@ -12,9 +14,11 @@ public class Pounce : Action
 
     public IEnumerator PounceSequence()
     {
-        float duration = 0.375f;
+        float duration = character.beatDuration;
         Vector2 startingPos = character.transform.position;
         Vector2 targetPos = character.targetLocation;
+
+        character.SetTrailEmitterActive(true);
 
         for (float time = 0; time <= duration; time += Time.deltaTime)
         {
@@ -34,9 +38,10 @@ public class Pounce : Action
                 {
                     if (collider == null) break;
                     CharacterHurtbox other = collider.gameObject.GetComponent<CharacterHurtbox>();
-                    if (other != null && other != character.hurtbox)
+                    if (other != null && other != character.hurtbox && !alreadyHit.Contains(other))
                     {
-                        other.Hit(1, character);
+                        other.Hit(1, character, character.pounceHitEffect);
+                        alreadyHit.Add(other);
                     }
                 }
             }
@@ -44,6 +49,7 @@ public class Pounce : Action
             yield return null;
         }
         character.visualObject.transform.localPosition = Vector3.zero;
+        character.SetTrailEmitterActive(false);
         FixedTransition(typeof(Scan));
     }
 }

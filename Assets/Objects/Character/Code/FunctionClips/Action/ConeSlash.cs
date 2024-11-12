@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ConeSlash : Action
 {
-    float hitMoment = 0.5f;
+    List<CharacterHurtbox> alreadyHit = new();
 
     public override void Start()
     {
@@ -14,34 +14,30 @@ public class ConeSlash : Action
 
     public IEnumerator ConeSlashSequence()
     {
-        duration = 1f;
-        bool hitboxUsed = false;
+        float duration = character.beatDuration * 2;
         GameObject hitboxInstance = Instantiate(character.coneSlashHurtBox, character.transform.position, Quaternion.AngleAxis(Vector3.Angle(Vector3.right, character.targetDirection), Vector3.back));
         Rigidbody2D hitboxRB = hitboxInstance.GetComponent<Rigidbody2D>();
-        for (float time = 0f; time <= duration; time += Time.deltaTime)
+
+        for (float time = 0f; time < duration; time += Time.deltaTime)
         {
-            if (time > hitMoment && !hitboxUsed)
-            {
-                hitboxUsed = true;
-                
-                Collider2D[] hitColliders = new Collider2D[10];
-                if (0 < hitboxRB.OverlapCollider(character.hurtboxFilter, hitColliders))
-                {
-                    foreach (Collider2D collider in hitColliders)
-                    {
-                        if (collider == null) break;
-                        CharacterHurtbox other = collider.gameObject.GetComponent<CharacterHurtbox>();
-                        if (other != null && other != character.hurtbox)
-                        {
-                            other.Hit(1, character);
-                        }
-                    }
-                }
-                Destroy(hitboxRB.gameObject);
-                
-            }
             yield return null;
         }
+
+        Collider2D[] hitColliders = new Collider2D[10];
+        if (0 < hitboxRB.OverlapCollider(character.hurtboxFilter, hitColliders))
+        {
+            foreach (Collider2D collider in hitColliders)
+            {
+                if (collider == null) break;
+                CharacterHurtbox other = collider.gameObject.GetComponent<CharacterHurtbox>();
+                if (other != null && other != character.hurtbox && !alreadyHit.Contains(other))
+                {
+                    other.Hit(1, character, character.coneSlashHitEffect);
+                    alreadyHit.Add(other);
+                }
+            }
+        }
+        Destroy(hitboxRB.gameObject);
         FixedTransition(typeof(Scan));
     }
 }

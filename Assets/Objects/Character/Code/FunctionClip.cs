@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -63,7 +62,7 @@ public abstract class FunctionClip : ScriptableObject
             }
             else if (CheckConditionCollection(conditionCollections[i]))
             {
-                Debug.Log(conditionCollections[i].name);
+                //Debug.Log(conditionCollections[i].name);
                 Type toClip = character.actionTransitionTable.table[myRowIndex, i];
                 HandleTransition(toClip);
                 return;

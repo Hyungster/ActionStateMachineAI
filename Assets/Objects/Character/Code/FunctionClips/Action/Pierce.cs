@@ -15,14 +15,9 @@ public class Pierce : Action
 
     public IEnumerator PierceSequence()
     {
-        float duration = character.beatDuration * 3 / 4;
-        for (float time = 0; time <= duration; time += Time.deltaTime)
-        {
-            //windup
-            yield return null;
-        }
 
-        duration = character.beatDuration / 4;
+        
+        float duration = character.beatDuration / 4;
         Vector2 startingPos = character.transform.position;
         Vector2 targetPos = character.charactersScanned[0].transform.position;
         Vector2 direction = (targetPos - startingPos);
@@ -44,8 +39,10 @@ public class Pierce : Action
             }
         }
 
-        character.SetTrailEmitterActive(true);
 
+        GameObject pierceObject = character.pierceEffect.gameObject;
+        pierceObject.transform.rotation = Quaternion.AngleAxis(Vector3.Angle(Vector3.right, direction.normalized), Vector3.back);
+        character.StartCoroutine(VFX());
         for (float time = 0; time <= duration; time += Time.deltaTime)
         {
             float factor = time / duration;
@@ -53,12 +50,27 @@ public class Pierce : Action
             float sqrFactor = Mathf.Clamp01(Mathf.Pow(factor, 3));
 
             character.transform.position = Vector2.Lerp(startingPos, targetPos, sqrFactor);
-
             yield return null;
         }
 
-        character.SetTrailEmitterActive(false);
+        duration = character.beatDuration * 3 / 4;
+        yield return new WaitForSeconds(duration);
+
         FixedTransition(typeof(Scan));
         
+    }
+
+    private IEnumerator VFX()
+    {
+        float duration = character.beatDuration / 2;
+        for (float time = 0; time <= duration; time += Time.deltaTime)
+        {
+            float factor = time / duration;
+
+            float upAndDownFactor = Mathf.Sin(6.28f * factor - 1.6f) / 2 + 0.5f;
+
+            character.pierceEffect.phase = Mathf.Lerp(character.pierceEffect.minPhase, character.pierceEffect.maxPhase, upAndDownFactor);
+            yield return null;
+        }
     }
 }

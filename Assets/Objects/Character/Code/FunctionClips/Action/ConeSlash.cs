@@ -15,13 +15,15 @@ public class ConeSlash : Action
     public IEnumerator ConeSlashSequence()
     {
         float duration = character.beatDuration * 2;
-        GameObject hitboxInstance = Instantiate(character.coneSlashHurtBox, character.transform.position, Quaternion.AngleAxis(Vector3.Angle(Vector3.right, character.targetDirection), Vector3.back));
+        Quaternion desiredAngle = Quaternion.AngleAxis(Vector3.Angle(Vector3.right, character.targetDirection), Vector3.forward);
+        GameObject hitboxInstance = Instantiate(character.coneSlashHurtBox, character.transform.position, desiredAngle);
+        character.ConeSlashEffect.transform.rotation = desiredAngle;
+
         Rigidbody2D hitboxRB = hitboxInstance.GetComponent<Rigidbody2D>();
 
-        for (float time = 0f; time < duration; time += Time.deltaTime)
-        {
-            yield return null;
-        }
+        character.StartCoroutine(VFX());
+
+        yield return new WaitForSeconds(duration); // windup
 
         Collider2D[] hitColliders = new Collider2D[10];
         if (0 < hitboxRB.OverlapCollider(character.hurtboxFilter, hitColliders))
@@ -39,5 +41,20 @@ public class ConeSlash : Action
         }
         Destroy(hitboxRB.gameObject);
         FixedTransition(typeof(Scan));
+    }
+
+    private IEnumerator VFX()
+    {
+        ConeSlashEffect effect = character.ConeSlashEffect;
+
+        float duration = character.beatDuration * 2;
+        for (float time = 0; time < duration; time += Time.deltaTime)
+        {
+            float factor = time / duration;
+            float decayFactor = Mathf.Pow(1 - factor, 8);
+            effect.phase = Mathf.Lerp(effect.minPhase, effect.maxPhase, decayFactor);
+            yield return null;
+        }
+        yield return null;
     }
 }

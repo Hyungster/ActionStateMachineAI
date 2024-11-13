@@ -11,11 +11,16 @@ public class CharacterHurtbox : MonoBehaviour
     public void Hit(int damage, Character sourceCharacter, VisualEffectAsset vfx)
     {
         character.TakeDamage(damage, sourceCharacter);
+
         GameObject hitVFX = new GameObject();
-        hitVFX.transform.position = character.transform.position;
+        Vector3 vfxPos = character.transform.position;
+        vfxPos += (sourceCharacter.transform.position - vfxPos).normalized / 4;
+        hitVFX.transform.position = vfxPos;
+
         VisualEffect vfxComponent = hitVFX.AddComponent<VisualEffect>();
         vfxComponent.visualEffectAsset = vfx;
         vfxComponent.Play();
+
         Destroy(hitVFX, 1);
     }
 

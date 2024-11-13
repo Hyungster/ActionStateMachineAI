@@ -18,7 +18,6 @@ public class Pounce : Action
         Vector2 startingPos = character.transform.position;
         Vector2 targetPos = character.targetLocation;
 
-        character.SetTrailEmitterActive(true);
 
         for (float time = 0; time <= duration; time += Time.deltaTime)
         {
@@ -49,7 +48,9 @@ public class Pounce : Action
             yield return null;
         }
         character.visualObject.transform.localPosition = Vector3.zero;
-        character.SetTrailEmitterActive(false);
+
+        yield return new WaitForSeconds(character.beatDuration);
+
         FixedTransition(typeof(Scan));
     }
 }

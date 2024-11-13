@@ -6,8 +6,7 @@ using System.Linq;
 using System;
 using static UnityEngine.GraphicsBuffer;
 using UnityEditor;
-using UnityEngine.TextCore.Text;
-using Unity.VisualScripting;
+
 using UnityEngine.VFX;
 public class Character : MonoBehaviour
 {
@@ -32,8 +31,10 @@ public class Character : MonoBehaviour
 
     //character hurtboxes
     public GameObject coneSlashHurtBox;
+    public ConeSlashEffect ConeSlashEffect;
     public VisualEffectAsset coneSlashHitEffect;
 
+    public PierceEffect pierceEffect;
     public VisualEffectAsset pierceHitEffect;
     public VisualEffectAsset pounceHitEffect;
 
@@ -88,7 +89,7 @@ public class Character : MonoBehaviour
     
     void Update()
     {
-        //DebugData();
+        DebugData();
         UpdateTracks();
     }
 

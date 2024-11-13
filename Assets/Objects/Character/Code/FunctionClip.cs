@@ -17,7 +17,7 @@ public abstract class FunctionClip : ScriptableObject
 
         if (character.debug)
         {
-            Debug.Log(character.gameObject.name + " Entered Clip: " + this.GetType());
+           // Debug.Log(character.gameObject.name + " Entered Clip: " + this.GetType());
         }
 
         for (int i = 0; i < character.actionTransitionTable.clipRows.Count; i++)

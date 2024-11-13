@@ -131,7 +131,7 @@ MonoBehaviour:
   phase: 2
   minPhase: 0
   maxPhase: 2
-  brightness: 0.5
+  brightness: 0
   startBrightness: 0.5
   maxBrightness: 3
   ringWidth: -0.25

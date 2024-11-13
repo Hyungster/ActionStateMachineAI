@@ -31,7 +31,7 @@ public class Character : MonoBehaviour
 
     //character hurtboxes
     public GameObject coneSlashHurtBox;
-    public ConeSlashEffect ConeSlashEffect;
+    public ConeSlashEffect coneSlashEffect;
     public VisualEffectAsset coneSlashHitEffect;
 
     public PierceEffect pierceEffect;
@@ -48,6 +48,8 @@ public class Character : MonoBehaviour
         hurtbox = transform.Find("Body/Hurtbox").gameObject.GetComponent<CharacterHurtbox>();
         trailRenderer = transform.Find("Body/Visual/Trail").gameObject.GetComponent<TrailRenderer>();
 
+        coneSlashEffect.gameObject.SetActive(true);
+        pierceEffect.gameObject.SetActive(true);
 
         List<FunctionClip> functionClips = new List<FunctionClip>(); //temp list to hold functionclips
 
@@ -89,7 +91,7 @@ public class Character : MonoBehaviour
     
     void Update()
     {
-        DebugData();
+        //DebugData();
         UpdateTracks();
     }
 

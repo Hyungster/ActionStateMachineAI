@@ -21,6 +21,7 @@ public class Pierce : Action
         Vector2 startingPos = character.transform.position;
         Vector2 targetPos = character.charactersScanned[0].transform.position;
         Vector2 direction = (targetPos - startingPos);
+        Vector2 normDirection = direction.normalized;
 
         targetPos += direction.normalized;
 
@@ -39,9 +40,13 @@ public class Pierce : Action
             }
         }
 
+        Debug.Log(normDirection);
+        Debug.DrawLine(character.transform.position, (Vector2)character.transform.position + normDirection, Color.red, 1);
 
         GameObject pierceObject = character.pierceEffect.gameObject;
-        pierceObject.transform.rotation = Quaternion.AngleAxis(Vector3.Angle(Vector3.right, direction.normalized), Vector3.back);
+
+        float desiredAngle = Mathf.Atan2(normDirection.y, normDirection.x) * Mathf.Rad2Deg;
+        pierceObject.transform.rotation = Quaternion.AngleAxis(desiredAngle, Vector3.forward);
         character.StartCoroutine(VFX());
         for (float time = 0; time <= duration; time += Time.deltaTime)
         {

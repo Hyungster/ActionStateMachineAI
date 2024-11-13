@@ -15,9 +15,11 @@ public class ConeSlash : Action
     public IEnumerator ConeSlashSequence()
     {
         float duration = character.beatDuration * 2;
-        Quaternion desiredAngle = Quaternion.AngleAxis(Vector3.Angle(Vector3.right, character.targetDirection), Vector3.forward);
-        GameObject hitboxInstance = Instantiate(character.coneSlashHurtBox, character.transform.position, desiredAngle);
-        character.ConeSlashEffect.transform.rotation = desiredAngle;
+        float desiredAngle = Mathf.Atan2(character.targetDirection.y, character.targetDirection.x) * Mathf.Rad2Deg;
+
+        Quaternion desiredQuaternion = Quaternion.AngleAxis(desiredAngle, Vector3.forward);
+        GameObject hitboxInstance = Instantiate(character.coneSlashHurtBox, character.transform.position, desiredQuaternion);
+        character.coneSlashEffect.transform.rotation = desiredQuaternion;
 
         Rigidbody2D hitboxRB = hitboxInstance.GetComponent<Rigidbody2D>();
 
@@ -45,14 +47,30 @@ public class ConeSlash : Action
 
     private IEnumerator VFX()
     {
-        ConeSlashEffect effect = character.ConeSlashEffect;
+        ConeSlashEffect effect = character.coneSlashEffect;
 
-        float duration = character.beatDuration * 2;
+        effect.brightness = effect.startBrightness;
+        effect.sharpness = 0;
+
+        float duration = character.beatDuration * 2 * 4/5;
         for (float time = 0; time < duration; time += Time.deltaTime)
         {
             float factor = time / duration;
-            float decayFactor = Mathf.Pow(1 - factor, 8);
+            float decayFactor = Mathf.Clamp01(Mathf.Pow(1 - factor, 4));
             effect.phase = Mathf.Lerp(effect.minPhase, effect.maxPhase, decayFactor);
+            yield return null;
+        }
+
+        duration = character.beatDuration * 2 / 4;
+        effect.brightness = effect.maxBrightness;
+        effect.sharpness = effect.maxSharpness;
+
+        for (float time = 0; time < duration; time += Time.deltaTime)
+        {
+            float factor = time / duration;
+            float decayFactor = Mathf.Clamp01(Mathf.Pow(1 - factor, 2));
+            effect.phase = Mathf.Lerp(effect.maxPhase, effect.minPhase, decayFactor);
+            effect.brightness = Mathf.Lerp(effect.maxBrightness, 0, 1 - decayFactor);
             yield return null;
         }
         yield return null;

@@ -12,7 +12,7 @@ public class Wait : Action
 
     private IEnumerator WaitToScan()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(2);
         FixedTransition(typeof(Scan));
     }
 }
@@ -33,16 +33,8 @@ public class Scan : Action
                 Character otherCharacter = hurtbox.character;
                 if (otherCharacter != null && otherCharacter != character && otherCharacter.alive)
                 {
-                    if (character.charactersScanned.Count > 0)
-                    {
-                        if (TryAddFront(otherCharacter)) continue;
-                        else if (TryAddBack(otherCharacter)) continue;
-                    }
-                    else
-                    {
-                        character.charactersScanned.Add(otherCharacter);
-                        continue;
-                    }
+                    TryAddFront(otherCharacter);
+                    continue;
                 }
             }
         }
@@ -52,39 +44,29 @@ public class Scan : Action
             character.targetLocation = character.charactersScanned[0].transform.position;
         }
 
+        foreach (Character other in character.charactersScanned)
+        {
+            Debug.Log((other.transform.position - character.transform.position).sqrMagnitude);
+        }
+
         End();
     }
 
 
 
-    private bool TryAddFront(Character other)
+    private void TryAddFront(Character other)
     {
-        if (character.charactersScanned.Count > 0)
+        foreach (Character c in character.charactersScanned)
         {
-            float shortestSqrDist = (character.charactersScanned[0].transform.position - character.transform.position).sqrMagnitude;
             float mySqrDist = (other.transform.position - character.transform.position).sqrMagnitude;
-            if (mySqrDist <= shortestSqrDist)
+            float otherSqrDist = (c.transform.position - character.transform.position).sqrMagnitude;
+            if (mySqrDist > otherSqrDist)
             {
-                character.charactersScanned.Insert(0, other);
-                return true;
+                character.charactersScanned.Add(other);
+                return;
             }
-            return false;
         }
-        return false;
-    }
-
-    private bool TryAddBack(Character other)
-    {
-        if (character.charactersScanned.Count > 0)
-        {
-            float longestSqrDist = (character.charactersScanned[character.charactersScanned.Count - 1].transform.position - character.transform.position).sqrMagnitude;
-            float mySqrDist = (other.transform.position - character.transform.position).sqrMagnitude;
-            if (mySqrDist >= longestSqrDist)
-            {
-                character.charactersScanned.Insert(character.charactersScanned.Count - 1, other);
-            }
-            return false;
-        }
-        return false;
+        character.charactersScanned.Insert(0, other);
+        return;
     }
 }

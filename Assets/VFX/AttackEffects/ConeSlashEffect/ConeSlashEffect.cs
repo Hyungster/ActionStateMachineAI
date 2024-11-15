@@ -8,7 +8,7 @@ public class ConeSlashEffect : MonoBehaviour
 
     public float phase = 2;
     public float minPhase = 0;
-    public float maxPhase = 2;
+    public float maxPhase = 3;
 
     public float brightness = 0.5f;
     public float startBrightness = 0.5f;

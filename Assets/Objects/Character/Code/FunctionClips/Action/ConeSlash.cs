@@ -70,9 +70,10 @@ public class ConeSlash : Action
             float factor = time / duration;
             float decayFactor = Mathf.Clamp01(Mathf.Pow(1 - factor, 2));
             effect.phase = Mathf.Lerp(effect.maxPhase, effect.minPhase, decayFactor);
-            effect.brightness = Mathf.Lerp(effect.maxBrightness, 0, 1 - decayFactor);
+            
             yield return null;
         }
+        effect.brightness = 0;
         yield return null;
     }
 }

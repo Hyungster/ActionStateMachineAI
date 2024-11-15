@@ -128,9 +128,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc67e7d126498d34686bf73cd9a91079, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phase: 2
+  phase: 3
   minPhase: 0
-  maxPhase: 2
+  maxPhase: 3
   brightness: 0
   startBrightness: 0.5
   maxBrightness: 3

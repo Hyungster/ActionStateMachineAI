@@ -66,16 +66,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Brightness: 2.55
+    - _Brightness: 0
     - _Darken: 0.64
     - _EnableExternalAlpha: 0
     - _InSharpness: -0.08
     - _OutSharpness: 0
-    - _Phase: 0.58
+    - _Phase: 2
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RingWidth: 5.81
-    - _Shaprness: 6.7
+    - _RingWidth: 1
+    - _Shaprness: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}

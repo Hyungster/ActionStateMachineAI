@@ -50,7 +50,8 @@ public class ConeSlash : Action
         ConeSlashEffect effect = character.coneSlashEffect;
 
         effect.brightness = effect.startBrightness;
-        effect.sharpness = 0;
+        effect.sharpness = 1;
+        effect.ringWidth = 1;
 
         float duration = character.beatDuration * 2 * 4/5;
         for (float time = 0; time < duration; time += Time.deltaTime)
@@ -58,12 +59,14 @@ public class ConeSlash : Action
             float factor = time / duration;
             float decayFactor = Mathf.Clamp01(Mathf.Pow(1 - factor, 4));
             effect.phase = Mathf.Lerp(effect.minPhase, effect.maxPhase, decayFactor);
+            effect.ringWidth = Mathf.Lerp(0, 10, factor);
             yield return null;
         }
 
         duration = character.beatDuration * 2 / 4;
         effect.brightness = effect.maxBrightness;
         effect.sharpness = effect.maxSharpness;
+        effect.ringWidth = 10;
 
         for (float time = 0; time < duration; time += Time.deltaTime)
         {

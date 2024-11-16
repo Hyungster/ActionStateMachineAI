@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b21cf9ac64f6e5048b10da903dd5dc43, type: 2}
+  - {fileID: 2100000, guid: 5d49507dc5bb17c41910862bc890a914, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -128,12 +128,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc67e7d126498d34686bf73cd9a91079, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phase: 3
+  phase: 2
   minPhase: 0
-  maxPhase: 3
+  maxPhase: 2
   brightness: 0
   startBrightness: 0.5
-  maxBrightness: 3
-  ringWidth: -0.25
-  sharpness: 0
-  maxSharpness: 0.25
+  maxBrightness: 1
+  ringWidth: 10
+  sharpness: 1
+  maxSharpness: 10

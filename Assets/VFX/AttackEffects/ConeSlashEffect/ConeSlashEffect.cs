@@ -31,6 +31,7 @@ public class ConeSlashEffect : MonoBehaviour
         material.SetFloat("_Phase", phase);
         material.SetFloat("_Brightness", brightness);
         material.SetFloat("_Sharpness", sharpness);
+        material.SetFloat("_RingWidth", ringWidth);
     }
 
 

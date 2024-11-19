@@ -49,6 +49,7 @@ public class Character : MonoBehaviour
         trailRenderer = transform.Find("Body/Visual/Trail").gameObject.GetComponent<TrailRenderer>();
 
         coneSlashEffect.gameObject.SetActive(true);
+        coneSlashEffect.transform.parent = null;
         pierceEffect.gameObject.SetActive(true);
 
         List<FunctionClip> functionClips = new List<FunctionClip>(); //temp list to hold functionclips

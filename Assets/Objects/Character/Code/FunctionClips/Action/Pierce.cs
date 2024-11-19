@@ -67,7 +67,7 @@ public class Pierce : Action
 
     private IEnumerator VFX()
     {
-        float duration = character.beatDuration / 2;
+        float duration = character.beatDuration;
         for (float time = 0; time <= duration; time += Time.deltaTime)
         {
             float factor = time / duration;

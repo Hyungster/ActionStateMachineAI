@@ -16,7 +16,14 @@ public class ConeSlashEffect : MonoBehaviour
 
 
 
-    public float ringWidth = -0.25f;
+    public float ringWidth1 = 16f;
+    public float ringWidth2 = 6f;
+
+    public float startRingWidth1 = 3;
+    public float endRingWidth1 = 16f;
+
+    public float startRingWidth2 = 6f;
+    public float endRingWidth2 = 6f;
 
 
     public float sharpness = 0;
@@ -31,7 +38,8 @@ public class ConeSlashEffect : MonoBehaviour
         material.SetFloat("_Phase", phase);
         material.SetFloat("_Brightness", brightness);
         material.SetFloat("_Sharpness", sharpness);
-        material.SetFloat("_RingWidth", ringWidth);
+        material.SetFloat("_RingWidth1", ringWidth1);
+        material.SetFloat("_RingWidth2", ringWidth2);
     }
 
 

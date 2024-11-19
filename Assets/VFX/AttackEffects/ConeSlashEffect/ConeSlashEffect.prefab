@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 8}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3074415348255863596}
@@ -132,8 +132,13 @@ MonoBehaviour:
   minPhase: 0
   maxPhase: 2
   brightness: 0
-  startBrightness: 0.5
+  startBrightness: 0.02
   maxBrightness: 1
-  ringWidth: 10
+  ringWidth1: 16
+  ringWidth2: 6
+  startRingWidth1: 3
+  endRingWidth1: 16
+  startRingWidth2: 6
+  endRingWidth2: 6
   sharpness: 1
   maxSharpness: 10

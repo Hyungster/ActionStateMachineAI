@@ -44,10 +44,12 @@ public class Scan : Action
             character.targetLocation = character.charactersScanned[0].transform.position;
         }
 
+        /*
         foreach (Character other in character.charactersScanned)
         {
             Debug.Log((other.transform.position - character.transform.position).sqrMagnitude);
         }
+        */
 
         End();
     }

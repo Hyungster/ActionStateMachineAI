@@ -70,12 +70,15 @@ Material:
     - _Darken: 0.64
     - _EnableExternalAlpha: 0
     - _InSharpness: -0.08
+    - _Offset: 0.3
     - _OutSharpness: 0
-    - _Phase: 2
+    - _Phase: 0.72
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RingWidth: 1
-    - _Shaprness: 1
+    - _RingWidth: 13.23
+    - _RingWidth1: 10.27
+    - _RingWidth2: 7.01
+    - _Shaprness: 10.7
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}

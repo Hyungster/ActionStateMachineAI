@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Reflection;
-using System.Linq;
 using System;
-using static UnityEngine.GraphicsBuffer;
-using UnityEditor;
+
 
 using UnityEngine.VFX;
+using UnityEngine.Events;
 public class Character : MonoBehaviour
 {
     [HideInInspector] public GameObject visualObject;
+
+    public UnityEvent<string> stateEntered;
 
     public bool alive = true;
 
@@ -41,6 +41,11 @@ public class Character : MonoBehaviour
     [HideInInspector] public int initialActionIndex = 0;
     [HideInInspector] public GameObject body;
     private TrailRenderer trailRenderer;
+
+    private void Awake()
+    {
+        stateEntered = new UnityEvent<string>();
+    }
 
     void Start()
     {

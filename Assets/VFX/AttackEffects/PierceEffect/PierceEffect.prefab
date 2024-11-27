@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7557a656adef92f4cb32daec16fcdcd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phase: 1
+  phase: 1.1
   minPhase: 1
   maxPhase: -1
 --- !u!1 &6709817237904880846

@@ -48,7 +48,7 @@ public class ConeSlash : Action
 
     private IEnumerator VFX()
     {
-        ConeSlashEffect effect = character.coneSlashEffect;
+        ConeSlashEffect effect = Instantiate(character.coneSlashEffect.gameObject, character.coneSlashEffect.transform.position, character.coneSlashEffect.transform.rotation).GetComponent<ConeSlashEffect>();
 
         effect.brightness = effect.startBrightness;
         effect.sharpness = 1;

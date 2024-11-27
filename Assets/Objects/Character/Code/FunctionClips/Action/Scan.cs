@@ -12,8 +12,12 @@ public class Wait : Action
 
     private IEnumerator WaitToScan()
     {
+        AudioSource audioSource = GameObject.Find("MusicObject").GetComponent<AudioSource>();
         yield return new WaitForSeconds(2);
+        audioSource.Play();
+        yield return new WaitForSeconds(1.3333333f);
         FixedTransition(typeof(Scan));
+        
     }
 }
 

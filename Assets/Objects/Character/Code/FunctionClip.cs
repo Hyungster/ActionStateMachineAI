@@ -30,6 +30,8 @@ public abstract class FunctionClip : ScriptableObject
         }
         conditionCollections = new List<ConditionCollection>(character.actionTransitionTable.conditionsColumns);
         Start();
+
+        character.stateEntered.Invoke(GetType().ToString());
     }
 
     public virtual void Start()

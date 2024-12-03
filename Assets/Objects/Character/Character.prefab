@@ -563,6 +563,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualObject: {fileID: 0}
+  stateEntered:
+    m_PersistentCalls:
+      m_Calls: []
   alive: 1
   debug: 0
   beatDuration: 0.375
